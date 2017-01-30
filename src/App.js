@@ -10,11 +10,15 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <span className="title">Welcome to React</span>
+          <span className="title">Welcome to my ReactEditor</span>
         </header>
         <main className="App-main">
-          <Editor who="Guido" className="pane"/>
-          <div className="pane"></div>
+          <div className="pane">
+            <Editor/>
+          </div>
+          <div className="pane">
+
+          </div>
         </main>
       </div>
     );

@@ -1,4 +1,48 @@
 .Editor{
 
+  background-color: #444;
+  --line-height: 25px;
+  --left-margin-width: 30px;
+  --left-margin-border-right-width: 1px;
+}
+.Editor .Line{
+  height: var(--line-height);
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: transparent;
+}
+.Editor .Line:hover{
+  background-color: #555;
+  /*height: 31px;
+  padding: 3px 0;*/
+}
+.Editor .Line .Line-left-margin{
+  width: calc(var(--left-margin-width) + var(--left-margin-border-right-width));
+  height: 100%;
 
+  background-color: #777;
+  border-right: solid #fff var(--left-margin-border-right-width);
+}
+.Editor .Line:hover .Line-left-margin{
+  background-color: #888;
+}
+.Editor .Line .Line-left-margin .Line-number{
+  min-width: 15px;
+  width: 15px;
+  max-width: 15px;
+  height: 100%;
+
+  color: #DDD;
+  text-align: right;
+
+  display: inline-block;
+}
+.Editor .Line .Line-left-margin .Line-bullet{
+  min-width: 15px;
+  width: 15px;
+  max-width: 15px;
+  height: 100%;
+  padding-left: 3px;
+
+  display: inline-block;
 }
