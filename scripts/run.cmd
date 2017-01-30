@@ -1,3 +1,3 @@
-#electron .
+cd ..
 npm start
 pause >nul
