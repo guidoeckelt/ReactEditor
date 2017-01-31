@@ -22,6 +22,8 @@
 
   background-color: #777;
   border-right: solid #fff var(--left-margin-border-right-width);
+
+  margin-right: 5px;
 }
 .Editor .Line:hover .Line-left-margin{
   background-color: #888;
@@ -45,4 +47,10 @@
   padding-left: 3px;
 
   display: inline-block;
+}
+
+.Editor .Line .TextBlock{
+
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
