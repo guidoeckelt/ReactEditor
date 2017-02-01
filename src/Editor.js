@@ -59,6 +59,7 @@ class Editor extends React.Component {
     this.state = {
       text : "Nice to meet you, sir",
       lines : [],
+      lineComponents : [],
       lineCounter : 0,
       mouseX : -1,
       mouseY : -1
@@ -87,13 +88,21 @@ class Editor extends React.Component {
 
   //Editor Functions
   addLine(content){
-    this.setState(function(prevState, props){
-      let counter = prevState.lineCounter+1;
-      let lines = prevState.lines;
-      let number = lines.length+1;
-      let textBlocks = [];
-      lines.push(<Line number={number} textBlocks={textBlocks} key={counter}/>);
-      return {lines : lines , lineCounter: counter}
+    let editor = this;
+    let counter = this.state.lineCounter+1;
+    let lines = this.state.lines;
+    let lineComponents = this.state.lineComponents;
+    let number = lines.length+1;
+    let textBlocks = [];
+    let element = <Line number={number} textBlocks={textBlocks} key={counter}
+                ref={function(line){
+                  lineComponents.push(line);
+                  editor.setState({lineComponents : lineComponents});
+                }}/>
+    lines.push(element);
+    this.setState({
+      lines : lines,
+      lineCounter : counter
     });
   }
 
@@ -105,7 +114,7 @@ class Editor extends React.Component {
   }
 
   mouseMove(event){
-    let buttons = event.buttons;
+    // let buttons = event.buttons;
     let element = ReactDOM.findDOMNode(this);
     // let element = event.target;
     let x = event.clientX - element.getBoundingClientRect().left;
@@ -113,8 +122,7 @@ class Editor extends React.Component {
     // console.log(buttons+' '+x+':'+y);
     this.setState({
       mouseX : x,
-      mouseY : y,
-      mouseButtons : buttons
+      mouseY : y
     })
   }
   mouseLeave(){
@@ -124,10 +132,11 @@ class Editor extends React.Component {
     });
   }
   mouseClick(event){
-    this.addLine();
-    console.log(this.state.lines);
-    // let text = <TextBlock content="I clicked hihi"/>;
-    // console.log(this.state.lines[0]);
+    // this.addLine();
+    let line = this.state.lineComponents[0]
+    console.log(line.state.textBlocks);
+    let text = <TextBlock content="I clicked hihi "/>;
+    line.appendTextBlock(text);
   }
 
   //

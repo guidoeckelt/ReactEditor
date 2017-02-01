@@ -50,7 +50,9 @@
 }
 
 .Editor .Line .TextBlock{
+  height: inherit;
 
   color: #fff;
   font-family: Arial, sans-serif;
+  white-space: nowrap;
 }
