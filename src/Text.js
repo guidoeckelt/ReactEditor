@@ -26,11 +26,6 @@ class Line extends React.Component{
     );
   }
 }
-  // {
-  //   this.props.children.length > 0 ?
-  //     this.props.children :
-  //     <Word content="Sample Content"/>
-  // }
 
 class Word extends React.Component{
   constructor(props){
@@ -72,6 +67,7 @@ class ToolButton extends React.Component{
     );
   }
 }
+
 class TextBlock{
   constructor(content){
     this.content = content;
@@ -279,7 +275,7 @@ class TextEditor extends React.Component {
 }
 
 
-export const Text = {
+let text = {
   Editor : TextEditor,
   Block : TextBlock,
   Line : Line,
@@ -299,4 +295,5 @@ export const Text = {
     );
   }
 };
-// export default TextEditor;
+export const Text = text;
+export default Text;
