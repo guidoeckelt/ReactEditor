@@ -62,7 +62,6 @@ class Editor extends React.Component {
     this.state = {
       text : "Nice to meet you, sir",
       textBlocks : [],
-      lineCounter : 0,
       mouseX : -1,
       mouseY : -1
     };
@@ -135,7 +134,7 @@ class Editor extends React.Component {
   }
 
   mouseMove(event){
-    let buttons = event.buttons;
+    // let buttons = event.buttons;
     let element = ReactDOM.findDOMNode(this);
     // let element = event.target;
     let x = event.clientX - element.getBoundingClientRect().left;
@@ -143,8 +142,7 @@ class Editor extends React.Component {
     // console.log(buttons+' '+x+':'+y);
     this.setState({
       mouseX : x,
-      mouseY : y,
-      mouseButtons : buttons
+      mouseY : y
     })
   }
   mouseLeave(){
