@@ -1,0 +1,8 @@
+.MarkdownViewer{
+  --default-background: #DDD;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--default-background);
+}

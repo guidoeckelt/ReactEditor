@@ -1,15 +1,55 @@
+@font-face {
+   src : url("https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css");
+}
 .Editor{
+  --default-background: #fff;
+  --default-background-lines: #444;
+  --default-text-color: #EEE;
 
-  background-color: #444;
   --line-height: 25px;
   --left-margin-width: 30px;
   --left-margin-border-right-width: 1px;
+
+  background: var(--default-background);
+}
+.Editor .ToolBox{
+  width: 100%;
+  height: 40px;
+
+  background-color: #DDD;
+
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.Editor .ToolBox .ToolButtonBar{
+  width: 100%;
+  height: 20px;
+
+  background-color: transparent;
+
+  display: flex;
+  flex-flow: row nowrap;
+}
+.Editor .ToolBox .ToolButtonBar .ToolButton{
+    width: auto;
+    height: 20px;
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.Editor .LineBox{
+
+  background: var(--default-background-lines);
+  cursor: text;
 }
 .Editor .Line{
   height: var(--line-height);
   display: flex;
   flex-flow: row nowrap;
   background-color: transparent;
+  /*cursor: text;*/
 }
 .Editor .Line:hover{
   background-color: #555;
@@ -23,6 +63,9 @@
   background-color: #777;
   border-right: solid #fff var(--left-margin-border-right-width);
 
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
   margin-right: 5px;
 }
 .Editor .Line:hover .Line-left-margin{
@@ -32,7 +75,7 @@
   min-width: 15px;
   width: 15px;
   max-width: 15px;
-  height: 100%;
+  height: auto;
 
   color: #DDD;
   text-align: right;
@@ -43,7 +86,7 @@
   min-width: 15px;
   width: 15px;
   max-width: 15px;
-  height: 100%;
+  height: auto;
   padding-left: 3px;
 
   display: inline-block;
@@ -52,17 +95,20 @@
 .Editor .Line .TextBlock{
   height: inherit;
 
-  color: #fff;
+  color: var(--default-text-color);
   font-family: Arial, sans-serif;
   white-space: nowrap;
 }
 .Editor .Line .Word{
-
-  color: #fff;
+  height: auto;
+  /*cursor: text;*/
+  color: var(--default-text-color);
   font-family: Arial, sans-serif;
 }
 .Editor .Line .Space{
-
-  color: #fff;
+  width: 7px;
+  height: auto;
+  /*cursor: text;*/
+  color: var(--default-text-color);
   font-family: Arial, sans-serif;
 }
