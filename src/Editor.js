@@ -8,35 +8,27 @@ class Line extends React.Component{
     super(props);
     this.state = {
       number : props.number,
-      textBlocks : props.textBlocks
+      children : props.children
     }
   }
   render(){
     return (
       <div className="Line" >
         <div className="Line-left-margin">
-          <span className="Line-number">{this.state.number}</span>
+          <span className="Line-number">{this.props.number}</span>
           <span className="Line-bullet">b</span>
         </div>
           {
-            this.state.textBlocks.length > 0 ?
-              this.state.textBlocks :
-              <TextBlock content="Sample Content"/>
+            this.props.children.length > 0 ?
+              this.props.children :
+              <Word content="Sample Content"/>
           }
       </div>
     );
   }
-  //Line Functions
-  appendTextBlock(newTextBlock){
-    this.setState(function(prevState,props){
-      let textBlocks = prevState.textBlocks;
-      textBlocks.push(newTextBlock);
-      return {textBlocks : textBlocks};
-    });
-  }
 }
-class TextBlock extends React.Component{
 
+class Word extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -45,20 +37,31 @@ class TextBlock extends React.Component{
   }
   render(){
     return (
-      <span className="TextBlock">
-        {this.state.content}
+      <span className="Word">
+        {this.props.content}
       </span>
     );
   }
 }
 
+class Space extends React.Component{
+  render(){
+    return (<span className="Space"></span>);
+  }
+}
+
+class TextBlock{
+  constructor(content){
+    this.content = content;
+  }
+}
 class Editor extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
       text : "Nice to meet you, sir",
-      lines : [],
+      textBlocks : [],
       lineCounter : 0,
       mouseX : -1,
       mouseY : -1
@@ -70,15 +73,14 @@ class Editor extends React.Component {
   }
 
   render() {
-    let lines = this.state.lines;
+    let rendered = this._renderTextBlocks();
     return (
       <div>
         <section className="Editor"
           onKeyUp={this.keyUp}
           onClick={this.mouseClick}
           onMouseMove={this.mouseMove} onMouseLeave={this.mouseLeave}>
-
-          {lines}
+          {rendered}
         </section>
         <span>{this.state.mouseX} : {this.state.mouseY}</span>
       </div>
@@ -86,17 +88,45 @@ class Editor extends React.Component {
   }
 
   //Editor Functions
-  addLine(content){
+  addText(text){
     this.setState(function(prevState, props){
-      let counter = prevState.lineCounter+1;
-      let lines = prevState.lines;
-      let number = lines.length+1;
-      let textBlocks = [];
-      lines.push(<Line number={number} textBlocks={textBlocks} key={counter}/>);
-      return {lines : lines , lineCounter: counter}
+      let textBlocks = prevState.textBlocks;
+      textBlocks.push(new TextBlock(text));
+      console.dir(textBlocks);
+      return {textBlocks : textBlocks}
     });
   }
-
+  _renderTextBlocks(){
+    let textBlocks = this.state.textBlocks;
+    let lineComponents = [];
+    if(textBlocks.length === 0){
+      return <Line number={1} children={[]}/>
+    }
+    let currentContent = "";
+    let counter = 1;
+    for(let i=0; i<textBlocks.length; i++){
+      let textBlock = textBlocks[i];
+      let lines = textBlock.content.split("${newLine}");
+      if(currentContent!==null){
+        lines = (currentContent+textBlock.content).split("${newLine}");
+      }
+      if(lines[0] === textBlock.content){
+        currentContent += textBlock.content;
+        continue;
+      }
+      for(let ii=0; ii<lines.length; ii++){
+        let line = lines[ii];
+        let words = [<Word content={line}/>];
+        lineComponents.push(<Line number={counter} children={words}/>);
+        counter++;
+      }
+    }
+    if(lineComponents.length === 0){
+      let words = [<Word content={currentContent}/>];
+      lineComponents.push(<Line number={counter} children={[words]}/>);
+    }
+    return lineComponents;
+  }
   //Event Handler
   keyUp(event){
     let keyCode = event.which;
@@ -124,16 +154,14 @@ class Editor extends React.Component {
     });
   }
   mouseClick(event){
-    this.addLine();
-    console.log(this.state.lines);
-    // let text = <TextBlock content="I clicked hihi"/>;
-    // console.log(this.state.lines[0]);
+    this.addText('Hey ${newLine}Hey Hey ');
+    // console.dir(this.state.textBlocks);
   }
 
   //
   // //Mount
   componentWillMount(){
-    this.addLine();
+    // this.addLine();
   }
   // componentDidMount(){
   //
