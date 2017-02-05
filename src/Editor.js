@@ -158,9 +158,9 @@ class Editor extends React.Component {
 
   //
   // //Mount
-  componentWillMount(){
-    // this.addLine();
-  }
+  // componentWillMount(){
+  //
+  // }
   // componentDidMount(){
   //
   // }
